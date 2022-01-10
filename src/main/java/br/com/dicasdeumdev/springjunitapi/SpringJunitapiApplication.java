@@ -7,9 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringJunitapiApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(SpringJunitapiApplication.class, args);
-
     }
-
 }
