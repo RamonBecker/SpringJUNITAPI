@@ -17,12 +17,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class UserServiceImplTest {
 
+    public static final int INDEX = 0;
     private static final String PASSWORD = "123";
     private static final Integer ID = 1;
     private static final String NAME = "Ramon";
@@ -78,16 +80,25 @@ class UserServiceImplTest {
 
         assertNotNull(response);
         assertEquals(1, response.size());
-        assertEquals(User.class, response.get(0).getClass());
+        assertEquals(User.class, response.get(INDEX).getClass());
 
-        assertEquals(ID, response.get(0).getId());
-        assertEquals(NAME, response.get(0).getName());
-        assertEquals(EMAIL, response.get(0).getEmail());
+        assertEquals(ID, response.get(INDEX).getId());
+        assertEquals(NAME, response.get(INDEX).getName());
+        assertEquals(EMAIL, response.get(INDEX).getEmail());
     }
 
 
     @Test
-    void create() {
+    void whenCreateThenReturnSuccess() {
+        when(repository.save(any())).thenReturn(user);
+
+        User response = service.create(userDTO);
+
+        assertNotNull(response);
+        assertEquals(User.class, response.getClass());
+        assertEquals(ID, response.getId());
+        assertEquals(NAME, response.getName());
+        assertEquals(EMAIL, response.getEmail());
     }
 
     @Test
