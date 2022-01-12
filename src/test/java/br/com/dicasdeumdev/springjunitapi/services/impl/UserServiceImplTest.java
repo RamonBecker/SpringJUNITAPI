@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 class UserServiceImplTest {
 
     public static final int INDEX = 0;
+    public static final String E_MAIL_JA_CADASTRADO = "E-mail já cadastrado";
     private static final String PASSWORD = "123";
     private static final Integer ID = 1;
     private static final String NAME = "Ramon";
@@ -111,7 +112,7 @@ class UserServiceImplTest {
 
         }catch (Exception ex){
             assertEquals(DataIntegratyViolationException.class, ex.getClass());
-            assertEquals("E-mail já cadastrado", ex.getMessage());
+            assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
         }
     }
 
@@ -128,8 +129,19 @@ class UserServiceImplTest {
         assertEquals(EMAIL, response.getEmail());
     }
 
-        @Test
-    void delete() {
+
+    @Test
+    void whenUpdateThenReturnAnDataIntegrityViolationException() {
+        when(repository.findByEmail(anyString())).thenReturn(optionalUser);
+
+        try {
+            optionalUser.get().setId(2);
+            service.create(userDTO);
+
+        }catch (Exception ex){
+            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
+        }
     }
 
     private void startUser(){
