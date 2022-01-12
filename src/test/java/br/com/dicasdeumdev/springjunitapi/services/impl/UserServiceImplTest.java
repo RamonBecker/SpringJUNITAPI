@@ -3,11 +3,11 @@ package br.com.dicasdeumdev.springjunitapi.services.impl;
 import br.com.dicasdeumdev.springjunitapi.domain.User;
 import br.com.dicasdeumdev.springjunitapi.domain.dto.UserDTO;
 import br.com.dicasdeumdev.springjunitapi.repositories.UserRepository;
+import br.com.dicasdeumdev.springjunitapi.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,6 +43,18 @@ class UserServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         startUser();
+    }
+
+    @Test
+    void whenFindByIdThenReturnAnObjectNotFoundException(){
+        when(repository.findById(anyInt())).thenThrow(new ObjectNotFoundException("Usuário não encontrado!"));
+
+        try {
+            service.findById(ID);
+        }catch (Exception ex){
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Usuário não encontrado!", ex.getMessage());
+        }
     }
 
     @Test
