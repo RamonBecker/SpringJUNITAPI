@@ -4,7 +4,7 @@ import br.com.dicasdeumdev.springjunitapi.domain.User;
 import br.com.dicasdeumdev.springjunitapi.domain.dto.UserDTO;
 import br.com.dicasdeumdev.springjunitapi.repositories.UserRepository;
 import br.com.dicasdeumdev.springjunitapi.services.UserService;
-import br.com.dicasdeumdev.springjunitapi.services.exceptions.DataIntegratyViolationException;
+import br.com.dicasdeumdev.springjunitapi.services.exceptions.DataIntegrityViolationException;
 import br.com.dicasdeumdev.springjunitapi.services.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     private void findByEmail(UserDTO obj){
         Optional<User> user = repository.findByEmail(obj.getEmail());
         if(user.isPresent() && !user.get().getId().equals(obj.getId())){
-            throw  new DataIntegratyViolationException("E-mail já cadastrado");
+            throw  new DataIntegrityViolationException("E-mail já cadastrado");
         }
     }
 }

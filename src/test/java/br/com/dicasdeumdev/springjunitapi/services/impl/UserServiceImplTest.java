@@ -3,7 +3,7 @@ package br.com.dicasdeumdev.springjunitapi.services.impl;
 import br.com.dicasdeumdev.springjunitapi.domain.User;
 import br.com.dicasdeumdev.springjunitapi.domain.dto.UserDTO;
 import br.com.dicasdeumdev.springjunitapi.repositories.UserRepository;
-import br.com.dicasdeumdev.springjunitapi.services.exceptions.DataIntegratyViolationException;
+import br.com.dicasdeumdev.springjunitapi.services.exceptions.DataIntegrityViolationException;
 import br.com.dicasdeumdev.springjunitapi.services.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -112,7 +112,7 @@ class UserServiceImplTest {
             service.create(userDTO);
 
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
         }
     }
@@ -140,7 +140,7 @@ class UserServiceImplTest {
             service.create(userDTO);
 
         }catch (Exception ex){
-            assertEquals(DataIntegratyViolationException.class, ex.getClass());
+            assertEquals(DataIntegrityViolationException.class, ex.getClass());
             assertEquals(E_MAIL_JA_CADASTRADO, ex.getMessage());
         }
     }
